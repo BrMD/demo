@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.exceptions.ApiErrorMessage;
 import com.example.demo.exceptions.DemoNotFoundException;
+import com.example.demo.exceptions.LoginExistsException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
             DemoNotFoundException exception, WebRequest request
     ){
         ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatusCode.valueOf(404), exception.getMessage());
+        return new ResponseEntity<>(apiErrorMessage, new HttpHeaders(), apiErrorMessage.getStatus());
+    }
+
+    @ExceptionHandler(LoginExistsException.class)
+    public ResponseEntity<Object> handleLoginExists(LoginExistsException exception, WebRequest request){
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatusCode.valueOf(400),exception.getMessage());
         return new ResponseEntity<>(apiErrorMessage, new HttpHeaders(), apiErrorMessage.getStatus());
     }
 }
