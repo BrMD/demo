@@ -12,9 +12,6 @@ import org.springframework.stereotype.Service;
 public class DemoFindByIdImpl implements DemoFindByIdUseCase {
     private final DemoRepository demoRepository;
     private final DemoMapper demoMapper;
-
-    @Autowired
-
     public DemoFindByIdImpl(DemoRepository demoRepository, DemoMapper demoMapper) {
         this.demoRepository = demoRepository;
         this.demoMapper = demoMapper;
