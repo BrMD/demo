@@ -19,6 +19,7 @@ public class DemoFindByIdImpl implements DemoFindByIdUseCase {
 
     @Override
     public DemoDtoResponse findById(Long id){
+
         var demoFound = demoRepository.findById(id).orElseThrow(() -> new DemoNotFoundException(id));
         return demoMapper.toDto(demoFound);
     }
