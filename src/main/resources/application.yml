@@ -13,3 +13,17 @@ spring:
       hibernate:
         hbm2ddl:
           auto: ${DB_HIBERNATE_DDL_AUTO:update}
+  mail:
+    default-encoding: UTF-8
+    host: smtp.sendgrid.net
+    username: ${SENDGRID_APIKEY}
+    password: ${SENDGRID_USERNAME}
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
