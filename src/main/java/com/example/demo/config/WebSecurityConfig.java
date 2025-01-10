@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 
+import com.example.demo.security.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,8 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.ExceptionTranslationFilter;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -28,26 +28,25 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(){
+        return new JwtAuthenticationFilter();
+    }
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> {
                             requests
-                                    .requestMatchers(HttpMethod.POST, "/demo").permitAll();
+                                    .requestMatchers(HttpMethod.POST, "/demo").permitAll()
+                                    .requestMatchers(("/login")).permitAll();
                             requests.anyRequest().authenticated();
-                        }
-
-                ).addFilterBefore(new BasicAuthenticationFilter(authenticationManager(httpSecurity)),
-                        UsernamePasswordAuthenticationFilter.class);
-
-
-
-
-
+                        }).addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 }
