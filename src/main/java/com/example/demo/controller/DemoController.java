@@ -8,6 +8,9 @@ import com.example.demo.service.JavaMailService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,6 +30,17 @@ public class DemoController {
     public ResponseEntity<DemoDtoResponse> create(@Valid @RequestBody DemoDtoCreate demoDtoCreate){
         DemoDtoResponse demoDtoResponse = demoCreateImpl.create(demoDtoCreate);
         return new ResponseEntity<>(demoDtoResponse, HttpStatusCode.valueOf(201));
+    }
+
+    @GetMapping("/current-user")
+    public String getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserDetails userDetails)) {
+            return "No authenticated user found.";
+        }
+        return "Current user: " + userDetails.getUsername();
+
     }
 
     @GetMapping("/{id}")

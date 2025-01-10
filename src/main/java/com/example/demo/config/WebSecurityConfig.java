@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -42,8 +44,10 @@ public class WebSecurityConfig {
                 ).addFilterBefore(new BasicAuthenticationFilter(authenticationManager(httpSecurity)),
                         UsernamePasswordAuthenticationFilter.class);
 
+
+
+
+
         return httpSecurity.build();
     }
-
-
 }
