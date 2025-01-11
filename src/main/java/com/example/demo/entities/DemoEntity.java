@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -66,4 +67,33 @@ public class DemoEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+//tabela customer
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "addres_id")
+//    private Address address;
+
+
+//tabela customer
+
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "customer_id")
+//    private List<Address> addresses;
+
+//tabela address
+
+//@Column(name = "customer_id")
+//private Integer customer_id;
+
+//tabela customer
+
+//@ManyToMany
+//@JoinTable(name = "customer_address", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
+//private List<Address> addresses;
+
+//tabela address
+
+//@ManyToMany(mappedBy = "addresses")
+//@JsonIgnore
+//private List<Customer> addresses;
+
 }

@@ -19,8 +19,9 @@ import java.nio.file.StandardCopyOption;
 @RestController
 @RequestMapping("/api/uploads")
 public class imagesController {
-    @Value("${file.upload-dir}")
-    private String uploadDir;
+//    @Value("${file.upload-dir}")
+    private final String uploadDir = "aa";
+
 
     @PostMapping("/images")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
